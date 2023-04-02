@@ -1,0 +1,42 @@
+{% extends 'layout.html'%}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg" style="background-color: #D5DBDB;">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bolder" href="#">MIS TAREAS</a>
+        <span>Bienvenido/a {{current_user.email}} <a href="/logout" class="mx-3">Salir</a></span>
+    </div>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid row m-0 vh-100 justify-content-center align-items-center">
+    <div class="card shadow w-50">
+        <div class="card-body">
+            <form action="/tareas/editar_tarea/{{tarea.id}}" method="post">
+                <h5 class="text-center">EDITAR TAREA</h1>
+                    {% with messages= get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{message}}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria_label="Close"></button>
+                          </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                <label for="Titulo" class="text-center" >Titulo</label>
+                <input type="text" class="form-control mb-3" name="titulo" id="titulo" value="{{tarea.titulo}}">
+                <label for="descripcion" class="text-center">Descripcion</label>
+                <textarea class="form-control mb-3" name="descripcion" rows="5">{{tarea.descripcion}}</textarea>
+                
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="/tareas" class="btn btn-danger">Cancelar</a>
+    
+            </form>
+        </div>
+        
+    </div>
+
+</div>
+
+{% endblock %}

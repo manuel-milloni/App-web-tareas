@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block nav %}
+<nav class="navbar navbar-expand-lg" style="background-color: #D5DBDB;">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bolder" href="#">MIS TAREAS</a>
+        <span>Bienvenido/a {{current_user.email}} <a href="/logout" class="mx-3">Salir</a></span>
+    </div>
+{% endblock %}
+
+{% block body%}
+<div class="container">
+    <div class="card mt-3 w-25 mx-auto d-block">
+         <div class="card-body d-flex">
+                                                                                                          <!-- mx-auto(para centrarlos) -->
+                <img src="{{url_for('static', filename='img/circle-plus-solid.svg')}}" width="25" class="mx-auto d-block" data-bs-toggle="modal" data-bs-target="#taskModal">
+                
+
+            
+         </div>
+    </div>
+  {% with messages=get_flashed_messages() %}
+  {% if messages %}
+     {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show p-3" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria_label="Close"></button>
+      </div>
+      {% endfor %}
+     {% endif %}
+     {% endwith %}   
+    <div class="row row-col-1 row-cols-sm-1 row-cols-md-3 row-cols-lg-4 mt-3">
+      {% for tarea in lista_tareas %}
+        <div class="col-md-3 p-3">
+          <div class="card p-2">
+            <div class="card-header">
+              {{tarea.titulo}}
+            </div>
+            <div class="card-body">
+              {{tarea.descripcion}}
+            </div>
+            <div class="card-body">
+              {{tarea.fecha}}
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                
+                <a onclick="return confirm('Desea eliminar la tarea?')" href="/tareas/eliminar_tarea/{{tarea.id}}" class="btn btn-danger" id="eliminar_tarea">Eliminar</a>
+                <a href="/tareas/editar_tarea/{{tarea.id}}" class="btn btn-warning" id="editar_tarea">Editar</a>
+            </div>
+          </div>
+        </div>
+
+      {% endfor %}
+    </div> 
+
+  <!-- Task-Modal-Nueva tarea -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva tarea</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/tareas/agregar_tarea" method="post">
+            <label for="">Titulo</label>
+            <input type="text" class="form-control mb-3" name="title">
+            <label for="">Descripcion</label>
+            <textarea class="form-control mb-3" name="descripcion" rows="5" ></textarea>
+            <button type="submit" class="btn btn-primary w-100">Guardar</button>    <!-- w-100(que ocupe todo el ancho) -->
+          </form>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

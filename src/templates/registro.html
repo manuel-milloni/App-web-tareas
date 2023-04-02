@@ -1,0 +1,35 @@
+{% extends 'layout.html'%}
+
+{% block body %}
+
+<div class="container-fluid row m-0 vh-100 justify-content-center align-items-center">
+    <div class="card shadow w-50">
+        <div class="card-body">
+            <form action="/registro_usuario" method="post">
+                <h5 class="text-center">REGISTRO NUEVO USUARIO</h1>
+                    {% with messages= get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{message}}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria_label="Close"></button>
+                          </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                <label for="email" class="text-center" >Email</label>
+                <input type="email" class="form-control mb-3" name="email" id="email" placeholder="Ingrese email">
+                <label for="password_1" class="text-center">Contraseña</label>
+                <input type="password" class="form-control mb-3" name="pass" id="pass" placeholder="Ingrese contraseña">
+                <label for="password_2" class="text-center">Repita contraseña</label>
+                <input type="password" class="form-control mb-3" name="pass_2" id="pass_2" placeholder="Ingrese contraseña">
+                <button type="submit" class="btn btn-primary">Crear usuario</button>
+                <a href="/" class="btn btn-danger">Cancelar</a>
+    
+            </form>
+        </div>
+        
+    </div>
+
+</div>
+{% endblock %}
